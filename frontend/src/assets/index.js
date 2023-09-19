@@ -2,7 +2,9 @@ import Logo from './Icons/Logo.svg'
 import Setting from './Icons/Setting.svg'
 import ActiveSetting from './Icons/activeSettings.svg'
 import PodcastImg from './Icons/Podcast.svg'
-import {FiPlus} from 'react-icons/fi'
+import PlusIcon from './Icons/PlusIcon.svg'
+import SettingMain from './Icons/SettingMain.svg'
+import Notification from './Icons/Bell-Icon.svg'
 const Menus = [
     {
         name: 'Projects',
@@ -23,4 +25,4 @@ const Menus = [
     
 ]
 
-export {Logo,Menus,Setting,ActiveSetting,PodcastImg,FiPlus}
+export {Logo,Menus,Setting,ActiveSetting,PodcastImg,PlusIcon,Notification,SettingMain}
