@@ -4,11 +4,12 @@ import Wrapper from '../components/HOC/Wrapper'
 import Acccount from '../pages/Acccount'
 import Upload from '../pages/Upload'
 import Configuration from '../pages/Configuration'
+import Home from '../pages/Home'
 
 const AllRoutes = () => {
   return (
     <Routes>
-          <Route path='/' element={<h1>home</h1>} />
+          <Route path='/' element={<Home/>} />
           <Route path='/account' element={<Wrapper><Acccount /></Wrapper>} />
           <Route path='/project/configuration' element={<Wrapper><Configuration /></Wrapper>} />
           <Route path='/project/upload' element={<Wrapper><Upload /></Wrapper>} />
