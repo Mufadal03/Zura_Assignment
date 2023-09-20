@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 
 const NavigationDrawer = () => {
   return (
-      <div className='bg-light-purple w-1/4 h-screen p-[1rem] relative'>
+      <div className='bg-light-purple w-1/4 min-h-screen max-h-auto p-[1rem] relative'>
           <div className='flex items-center'>
               <img src={Logo} alt='logo' />
               <h1 className='text-purple font-extrabold text-[2.3rem]'>LAMA</h1>
