@@ -3,11 +3,17 @@ const jwt = require('jsonwebtoken')
 const {UserModel } = require('../models/user.model')
 require('dotenv').config()
 
+// Signing Up :-
 const signUp = async (req, res) => {
+    // Getting email , password , username from request body to fill the requirent of the model.
     const { email, password, username } = req.body
+
+    // Checking if User with the email provided already exists or not
     const user = await UserModel.findOne({ $or: [{ email }, { username }] })
     if (user !== null) return res.status(400).send({ response: "User already exist", success: false })
+
     try {
+        // Hashing the plain text password to hashed password
         bcrypt.hash(password, 5, async (err, hash) => {
             if (err) {
                 return res.status(400).send({ response: err.message, success: false })
@@ -21,16 +27,22 @@ const signUp = async (req, res) => {
     }
 }
 
+// Login :-
 const login = async (req, res) => {
+    // Getting Email Password from request body
     const { email, password } = req.body
+    
+    // Checking if user with provided email exists or not
     const user = await UserModel.findOne({ email })
     if (!user) return res.status(401).send({ response: 'Please Signup', success: false })
+
     const hashedPassword = user.password
-    console.log(password,hashedPassword)
     try {
+        // Comparing Plain text Password with hashed Password
         bcrypt.compare(password, hashedPassword, (err, result) => {
             if (err) return res.status(400).send({ response: 'Credentials are not matching', success: false })
             if (result) {
+                // Generating JWT token for user
                 jwt.sign({ userId: user._id, userEmail: user.email }, process.env.JWT_SECRET, (err, token) => {
                     res.status(200).send({ response: 'SignIn Successfull', token, success: true })
                 })
