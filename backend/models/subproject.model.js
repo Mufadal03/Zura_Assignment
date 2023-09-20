@@ -1,4 +1,6 @@
-const { model, Schema } = require('mongoose')
+const mongoose = require('mongoose')
+const { model, Schema } = mongoose
+
 const subProjectSchema = Schema({
     name: { type: String, required: true },
     description: { type: String, required: true },
@@ -8,6 +10,6 @@ const subProjectSchema = Schema({
     versionKey: false, // Disable the version key
 })
 
-const SubProjectModel = model('subproject', subProjectSchema)
+const SubProjectModel = model('SubProject', subProjectSchema)
 
 module.exports={SubProjectModel}

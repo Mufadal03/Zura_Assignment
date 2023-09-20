@@ -41,4 +41,8 @@ const login = async (req, res) => {
     }
 }
 
-module.exports={signUp,login}
+const getUsers = async (req, res) => {
+    const users = await UserModel.find({})
+    res.send(users)
+}
+module.exports={signUp,login,getUsers}
