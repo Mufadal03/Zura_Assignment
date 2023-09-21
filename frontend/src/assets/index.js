@@ -12,6 +12,7 @@ import CloudUpload from "./Icons/CloudUpload.svg";
 import SearchIcon from "./Icons/Search.svg";
 import EditIcon from './Icons/editIcon.svg'
 import CrossIcon from "./Icons/CrossIcon.svg";
+import profileImg from './Icons/profileImg.svg'
 const headings = ["name", "Upload Date & Time", "Status", "Actions"];
 const Menus = [
     {
@@ -114,4 +115,5 @@ export {
     SearchIcon,
     YoutubeIcon,
     CrossIcon,
+    profileImg
 };

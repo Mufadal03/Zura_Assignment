@@ -22,8 +22,8 @@ const Projects = () => {
       </div>
       <div className="grid grid-cols-3 gap-12 max-w-screen-xl mx-auto mt-5 py-2">
         {projects?.length > 0 &&
-          projects?.map((el) => {
-            return <ProjectCard {...el} />;
+          projects?.map((el,i) => {
+            return <ProjectCard key={i.toString(2)} {...el} />;
           })}
       </div>
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>

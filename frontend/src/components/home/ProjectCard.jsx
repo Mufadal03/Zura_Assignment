@@ -27,12 +27,17 @@ const ProjectCard = ({ name, subprojects, createdAt, updatedAt, _id }) => {
       </div>
       <div className="flex flex-col justify-between">
         <div className="h-[70%] flex flex-col gap-1 justify-center">
-          <h3 className="text-purple font-bold text-2xl">{name}</h3>
-          <p className="text-sm">{subprojects.length} Episodes</p>
+          <h3 className="text-purple font-[700] text-2xl">
+            {name.length > 15 ? `${name.slice(0, 15)}....` : name}
+          </h3>
+          <p className="text-sm ">
+            {subprojects.length}{" "}
+            {subprojects.length > 1 ? "Episodes" : "Episode"}
+          </p>
         </div>
         <div>
           {/* calculate dynamically days from the last day edited */}
-          <p className="text-sm">
+          <p className="text-sm text-[#969696]">
             Last edited {calculateTimeDifferenceWithIST(updatedAt)}
           </p>
         </div>

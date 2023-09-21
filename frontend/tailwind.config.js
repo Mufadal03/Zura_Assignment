@@ -10,9 +10,14 @@ module.exports = {
       'light-purple': '#F3E8FF',
       'activeBlack': '#211935',
       'gray': '#1D1B201F',
-      'light-gray':'#1D1B2014'
+      'light-gray': '#1D1B2014'
     },
-    extend: {},
+    extend: {
+      fontFamily: {
+        Roboto: ['Roboto', 'sans'],
+        Jarakata: ['Plus Jakarta Sans', 'sans']
+      }
+    },
   },
   plugins: [],
 }

@@ -13,19 +13,21 @@ const UploadPodcast = ({ name, getSingleProject }) => {
       <h1 className="text-purple font-bold text-4xl py-2 mb-2">{name}</h1>
       <div className="grid grid-cols-3 gap-x-12 gap-y-5 ">
         {Platforms.map((el, i) => (
-          <div className="w-[80%]" onClick={() => setIsOpen(true)}>
+          <div key={i.toString(2)} className="w-[80%]" onClick={() => setIsOpen(true)}>
             <PlatformCard {...el} />
           </div>
         ))}
       </div>
-      <div className="flex items-center justify-center my-5">OR</div>
-      <div className="min-h-[330px] max-h-auto border-dashed border-2 border-[#999] rounded-xl flex flex-col items-center justify-center">
+      <div className="flex items-center justify-center text-lg text-[#999999] my-4">
+        or
+      </div>
+      <div className="min-h-[330px] max-h-auto border-dashed border-2 border-[#999999] rounded-xl flex flex-col items-center justify-center">
         <img className="h-[80px]" src={CloudUpload} alt="upload" />
         <p className="text-#49454F text-lg">
           Select a file or drag and drop here (Podcast Media or Transcription
           Text)
         </p>
-        <p className="text-#00000066 text-sm">
+        <p className="text-[#999999] text-sm">
           MP4, MOV, MP3, WAV, PDF, DOCX or TXT file{" "}
         </p>
         <button

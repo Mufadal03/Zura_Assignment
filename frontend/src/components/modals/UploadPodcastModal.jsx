@@ -21,7 +21,6 @@ const UploadPodcastModal = ({ onClose }) => {
     });
   };
   const handleUpload = async () => {
-    console.log("calling handle upload");
     const { name, description } = podcastData;
     if (!name) {
       setError(true);
@@ -35,16 +34,12 @@ const UploadPodcastModal = ({ onClose }) => {
     }
     try {
       const res = await api.post(`/subProject/create/${id}`, podcastData);
-      console.log(id, "id");
-      console.log(res);
       if (res.success) {
         onClose();
       }
     } catch (error) {
       console.log(error);
     }
-
-    console.log(podcastData);
   };
   useEffect(() => {
     nameRef.current.focus();
@@ -58,7 +53,7 @@ const UploadPodcastModal = ({ onClose }) => {
         </div>
         <img
           onClick={() => onClose()}
-          className="h-[20px]"
+          className="h-[20px] hover:cursor-pointer"
           src={CrossIcon}
           alt="crossIcon"
         />
@@ -72,7 +67,7 @@ const UploadPodcastModal = ({ onClose }) => {
             name="name"
             value={podcastData.name}
             onChange={handleChange}
-            className="p-2 ring-1  placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full focus:border-none rounded-md focus:ring-1"
+            className="p-2 ring-1 ring-gray  placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full focus:border-none rounded-sm focus:ring-1"
             type="text"
           />
         </div>
@@ -82,7 +77,7 @@ const UploadPodcastModal = ({ onClose }) => {
             name="description"
             value={podcastData.description}
             onChange={handleChange}
-            className="p-2 ring-1  placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full focus:border-none rounded-md focus:ring-1"
+            className="p-2 ring-1 ring-gray  placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full focus:border-none rounded-sm focus:ring-1"
             type="text"
           />
         </div>

@@ -42,7 +42,7 @@ const EditDescription = () => {
     getProjectDescription();
   }, []);
   return (
-    <div className="w-3/4 p-5">
+    <div className="w-3/4 p-5 font-Roboto">
       <div className="flex justify-between border-2">
         <div>Breadcrum here</div>
         <div className="flex gap-2">
@@ -52,7 +52,7 @@ const EditDescription = () => {
       </div>
       <div className="mt-1">
         <div className="flex justify-between">
-          <h1 className="text-purple font-bold text-4xl py-2 mb-2">
+          <h1 className="text-purple font-[700] text-4xl py-2 mb-2">
             Edit Transcript
           </h1>
 
@@ -60,7 +60,7 @@ const EditDescription = () => {
             <div className="flex items-center gap-2 ">
               <button
                 onClick={() => setDescription(originalContent)}
-                className="border-2 px-10 rounded-md font-bold text-[#FF274C] py-3"
+                className="border-2 border-[#FF274C] px-10 rounded-md font-bold text-[#FF274C] py-3"
               >
                 Discard
               </button>

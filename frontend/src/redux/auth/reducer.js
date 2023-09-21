@@ -1,5 +1,6 @@
 import * as data from './actionTypes'
 const initialState = {
+    userName:'',
     isAuth: JSON.parse(localStorage.getItem('isAuth')) || false,
     token: JSON.parse(localStorage.getItem('token')) || null,
     isLoading: false,

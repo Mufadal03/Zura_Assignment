@@ -25,6 +25,7 @@ const CreateProject = ({ onClose }) => {
     try {
       const response = await api.post(`/project/create`, { name: projectName });
       if (response.success) {
+        console.log('Calling GEt project fn')
         dispatch(getProjects());
         onClose();
       }
@@ -37,14 +38,14 @@ const CreateProject = ({ onClose }) => {
   }, []);
   return (
     <div className="flex flex-col gap-6 p-2">
-      <h3 className="text-2xl font-bold">Create Project</h3>
+      <h3 className="text-2xl font-[700]">Create Project</h3>
       <div className="flex flex-col gap-1">
-        <p className="mb-1">Enter Project Name:</p>
+        <p className="mb-1 text-lg" >Enter Project Name:</p>
         <input
           ref={inputRef}
           onChange={(e) => setProjectName(e.target.value)}
           value={projectName}
-          className="p-2 ring-1  placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full focus:border-none rounded-md focus:ring-1"
+          className="p-2 font-[500] ring-1 ring-gray  placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full focus:border-none rounded-sm focus:ring-1"
           placeholder="Type here"
           type="text"
         />

@@ -11,7 +11,7 @@ const initialState = {
 const Upload = () => {
   const [singleProject, setSingleProject] = useState(initialState);
   const { id } = useParams();
-
+    console.log('id',id)
   const getSingleProject = async () => {
     try {
       const { response: project } = await api.get(`/project/${id}`);
@@ -39,7 +39,7 @@ const Upload = () => {
     getSingleProject();
   }, [id]);
   return (
-    <div className="w-3/4 p-5">
+    <div className="w-3/4 p-5 font-Roboto">
       <div className="flex justify-between border-2">
         <div>Breadcrum here</div>
         <div className="flex gap-2">
