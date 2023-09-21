@@ -58,4 +58,13 @@ const deleteSubProject = async (req, res) => {
         res.status(500).send({response:`Failed to delete ${error.message}`,success:false})
     }
 }
-module.exports = { createSubproject, updateSubProject , deleteSubProject}
+const getSubProject = async (req, res) => {
+    const { id } = req.params 
+    try {
+        const singleProject = await SubProjectModel.findOne({ _id: id })
+        res.status(200).send({response:singleProject,success:true})
+    } catch (error) {
+        res.status(500).send({response:`Failed to get single subProject ${error.message}`,success:false})
+    }
+}
+module.exports = { createSubproject, updateSubProject , deleteSubProject,getSubProject}

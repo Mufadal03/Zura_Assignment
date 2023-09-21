@@ -3,7 +3,7 @@ const { ProjectModel } = require("../models/project.model")
 // Create Project :-
 const createProject = async (req, res) => {
     //Getting project Name and CreatedBy (UserId) to keep track of projects of a particular User.
-    const { name, createdBy } = req.body
+    const { name, userId:createdBy } = req.body
     try {
         const newProject = new ProjectModel({
             name,
@@ -25,7 +25,7 @@ const createProject = async (req, res) => {
 // Get Projects :-
 const getProjects = async (req, res) => {
     // Getting createBy (UserId) to get all projects of that user
-    const { createdBy } = req.body
+    const {userId:createdBy } = req.body
     try {
         // Getting projects and populating the subproject field by its reference subProjectId.
         const projects = await ProjectModel.find({createdBy}).populate('subprojects')
@@ -39,9 +39,9 @@ const getProjects = async (req, res) => {
 const getSingleProject = async (req, res) => {
     // Getting id (ProjectId) from params and createdBy (UserId) from request body to Fetch single project from the DB
     const { id } = req.params
-    const { createdBy } = req.body
+    const { userId:createdBy } = req.body
     try {
-        const project = await ProjectModel.find({ _id: id, createdBy }).populate('subprojects')
+        const project = await ProjectModel.findOne({ _id: id, createdBy }).populate('subprojects')
         res.status(200).send({ response: project, success: true })
     } catch (error) {
         res.status(500).send({ response: `Failed to get project ${error.message}`, success: false })

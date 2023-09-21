@@ -53,8 +53,25 @@ const login = async (req, res) => {
     }
 }
 
-const getUsers = async (req, res) => {
-    const users = await UserModel.find({})
-    res.send(users)
+const getUser = async (req, res) => {
+    const { userId } = req.body 
+    try {
+        const user = await UserModel.findOne({ _id: userId })
+        res.status(200).send({response:user,success:true})
+    } catch (error) {
+        res.status(400).send({response:`Failed to get User ${error.message}`,success:false})
+    }
 }
-module.exports={signUp,login,getUsers}
+
+const updateUser = async (req, res) => {
+    const { username ,userId} = req.body 
+    try {
+        const user = await UserModel.findOneAndUpdate({ _id: userId }, { username })
+        if (user.modifiedCount !== 0) {
+            res.status(201).send({response:'Username Updated',success:true})
+        }
+    } catch (error) {
+        res.status(400).send({ response:`Failed to update Username ${error.message}`,success:false})
+    }
+}
+module.exports={signUp,login,getUser,updateUser}
