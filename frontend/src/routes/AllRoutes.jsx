@@ -9,10 +9,12 @@ import WidgetConfiguration from "../pages/WidgetConfiguration";
 import Login from "../pages/Login";
 import Signup from "../pages/SignUp";
 import { PrivateRoutes } from "./PrivateRoutes";
+import UploadPageRe from "../components/upload/UploadPageRe";
 
 const AllRoutes = () => {
   return (
     <Routes>
+      {/* Home Route */}
       <Route
         path="/"
         element={
@@ -21,8 +23,14 @@ const AllRoutes = () => {
           </PrivateRoutes>
         }
       />
+
+      {/* Login Route */}
       <Route path="/login" element={<Login />} />
+
+      {/* Signup Route */}
       <Route path="/signup" element={<Signup />} />
+
+      {/* Account Route */}
       <Route
         path="/account"
         element={
@@ -33,6 +41,8 @@ const AllRoutes = () => {
           </PrivateRoutes>
         }
       />
+
+      {/* Widget Configuration Route */}
       <Route
         path="/project/configuration"
         element={
@@ -43,6 +53,11 @@ const AllRoutes = () => {
           </PrivateRoutes>
         }
       />
+
+      {/* Upload Page Redirect */}
+      <Route path="/project/upload" element={<UploadPageRe />} />
+
+      {/* Upload Route with Project ID */}
       <Route
         path="/project/upload/:id"
         element={
@@ -53,6 +68,8 @@ const AllRoutes = () => {
           </PrivateRoutes>
         }
       />
+
+      {/* Edit Description Route */}
       <Route
         path="/project/upload/:id/edit/:id"
         element={
@@ -63,7 +80,9 @@ const AllRoutes = () => {
           </PrivateRoutes>
         }
       />
-      <Route path="*" element={<h1>Page does not Exists</h1>} />
+
+      {/* Wildcard Route (Page does not exist) */}
+      <Route path="*" element={<h1>Page does not Exist</h1>} />
     </Routes>
   );
 };

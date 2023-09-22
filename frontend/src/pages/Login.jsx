@@ -1,38 +1,48 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginFn } from "../redux/auth/action";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
-    const [errorMessage, setErrorMessage] = useState('')
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
-      const [formData, setFormData] = useState({
-        email: "",
-        password: "",
+  const [errorMessage, setErrorMessage] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+    const { isLoading } = useSelector((state) => state.authReducer);
+  // State to hold form data (email and password)
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  // Handle form input changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const { email, password } = formData;
+
+    // Basic form validation
+    if (!email || !password) {
+      setErrorMessage("All Fields are required");
+      return;
+    }
+
+    // Dispatch the login action with form data
+    dispatch(loginFn(formData))
+      .then(() => navigate("/")) // Redirect to the homepage upon successful login
+      .catch((error) => {
+        // Handle login failure
+        console.error(error);
+        setErrorMessage("Login failed. Please check your credentials.");
       });
-
-      const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-          ...formData,
-          [name]: value,
-        });
-      };
-
-      const handleSubmit = (e) => {
-          e.preventDefault();
-          const {email,password} = formData
-          if (!email || !password) {
-              setErrorMessage('All Fields are required')
-              return
-          }
-          dispatch(loginFn(formData))
-              .then(() => navigate('/'))
-
-        // Perform login logic here using formData
-        console.log("Form data submitted:", formData);
-      };
+  };
 
   return (
     <div className="flex justify-center items-center h-screen bg-[#f3f4f6] font-Roboto">
@@ -43,8 +53,8 @@ function Login() {
             Use this Account or Login to your account
           </p>
           <div className="">
-            <p>Email : testuser1@gmail.com</p>
-            <p>Password : testuser1</p>
+            <p>Email: testuser1@gmail.com</p>
+            <p>Password: testuser1</p>
           </div>
         </div>
         <form onSubmit={handleSubmit}>
@@ -80,10 +90,11 @@ function Login() {
             )}
           </div>
           <button
-            type="submit"
+                      type="submit"
+                      disabled={isLoading}
             className="w-full bg-[#3b82f6] hover:bg-[#2563eb] text-white font-semibold py-2 rounded focus:outline-none"
           >
-            Login
+            {isLoading ? "Loging In......" : "Login"}
           </button>
         </form>{" "}
         <p className="text-gray-600 mt-4">

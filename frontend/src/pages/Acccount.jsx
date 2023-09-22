@@ -1,18 +1,27 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Notification, SettingMain, profileImg } from "../assets";
+import { profileImg } from "../assets";
 import { api } from "../api";
+import NavigationBar from "../components/common/NavigationBar";
+
 const initialUserState = {
   username: "",
   userEmail: "",
 };
-const Acccount = () => {
+
+const Account = () => {
   const [userData, setUserData] = useState(initialUserState);
   const [originalUsername, setOriginalUsername] = useState("");
   const [isEditing, setIsEditing] = useState(false);
+  const [getContentLoading, setContentLoading] = useState(false)
+  const [isLoading,setIsLoading] = useState(false)
   const userNameRef = useRef();
+
+  // Fetch user details when the component mounts
   const getUserDetail = async () => {
     try {
+      setContentLoading(true)
       const { response } = await api.get("/user");
+      setContentLoading(false);
       if (response) {
         setUserData({
           ...userData,
@@ -25,6 +34,8 @@ const Acccount = () => {
       console.log(error);
     }
   };
+
+  // Handle user clicking on the "Edit" button
   const handleOnEditing = () => {
     if (isEditing) {
       setIsEditing(false);
@@ -33,12 +44,16 @@ const Acccount = () => {
     setIsEditing(true);
     userNameRef.current.focus();
   };
+
+  // Handle changes in the username input field
   const handleChange = (e) => {
     setUserData({
       ...userData,
       username: e.target.value,
     });
   };
+
+  // Handle discarding changes
   const handleDiscard = () => {
     setUserData({
       ...userData,
@@ -46,32 +61,33 @@ const Acccount = () => {
     });
     setIsEditing(false);
   };
-  const handleSave = async() => {
+
+  // Handle saving changes
+  const handleSave = async () => {
     try {
-      const res = await api.patch('/user',{username:userData.username})
+      setIsLoading(true)
+      const res = await api.patch("/user", { username: userData.username });
+      setIsLoading(false)
       if (res.success) {
-        setIsEditing(false)
+        setIsEditing(false);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
+
+  // Fetch user details on component mount
   useEffect(() => {
     getUserDetail();
   }, []);
+
   return (
     <div className="w-3/4 p-5 font-Roboto">
-      {/* BREADCRUM HERE MAKE IT DYNAMIC */}
-      <div className="flex justify-between border-2">
-        <div>Breadcrum here</div>
-        <div className="flex gap-2">
-          <img src={SettingMain} alt="setting" className="h-[2.5rem]" />
-          <img src={Notification} alt="notification" className="h-[2.5rem]" />
-        </div>
-      </div>
+      {/* NavigationBar component for navigation */}
+      <NavigationBar />
 
       <div className="mt-1 py-2">
-        <h1 className="text-4xl text-purple mb-5 font-Roboto font-[800] ">
+        <h1 className="text-4xl text-purple mb-5 font-Roboto font-[800]">
           Account Settings
         </h1>
         <div className="flex justify-between">
@@ -92,8 +108,11 @@ const Acccount = () => {
                 className=" my-1 p-2 ring-1 ring-gray placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full focus:border-none rounded-sm focus:ring-1"
                 type="text"
                 readOnly={isEditing ? false : true}
-                // defaultValue={userData.username}
-                value={userData.username}
+                value={
+                  getContentLoading
+                    ? "Getting username......"
+                    : userData.username
+                }
                 onChange={handleChange}
               />
               {isEditing && (
@@ -105,10 +124,13 @@ const Acccount = () => {
                     Discard
                   </button>
                   <button
+                    disabled={isLoading}
                     onClick={handleSave}
-                    className="border-2 px-5 rounded-md text-sm font-bold text-white bg-activeBlack py-1"
+                    className={`border-2 px-5 rounded-md text-sm font-bold text-white bg-activeBlack py-1 ${
+                      isLoading ? "cursor-not-allowed" : "cursor-pointer"
+                    }`}
                   >
-                    Save & Exit
+                    {isLoading ? "Saving...." : "Save & Exit"}
                   </button>
                 </div>
               )}
@@ -119,7 +141,11 @@ const Acccount = () => {
             <input
               className="p-2 ring-1 ring-gray  placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full focus:border-none rounded-sm focus:ring-1"
               type="text"
-              defaultValue={userData.userEmail}
+              defaultValue={
+                getContentLoading
+                  ? "Getting user email...."
+                  : userData.userEmail
+              }
               readOnly
             />
           </div>
@@ -148,4 +174,4 @@ const Acccount = () => {
   );
 };
 
-export default Acccount;
+export default Account;

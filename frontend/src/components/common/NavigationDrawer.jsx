@@ -4,17 +4,19 @@ import { NavLink } from "react-router-dom";
 
 const NavigationDrawer = () => {
   return (
+    //   Container for Navigation Drawer
     <div className="bg-light-purple w-1/4 min-h-screen max-h-auto p-[1rem] relative font-Roboto">
       <div className="flex items-center">
         <img src={Logo} alt="logo" />
         <h1 className="text-purple font-extrabold text-[2.3rem]">LAMA</h1>
       </div>
-      <h1 className="px-[.9rem]">Sample project name something</h1>
+      <h1 className="px-[.9rem]">Sample project</h1>
+      {/* Menu Items */}
       <div className="flex flex-col gap-3 mt-2">
         {Menus.map((el, i) => {
           return (
-              <NavLink
-                  key={i.toString(2)}
+            <NavLink
+              key={i.toString(2)}
               to={el.link}
               className={({ isActive }) =>
                 isActive
@@ -41,6 +43,7 @@ const NavigationDrawer = () => {
         })}
       </div>
       <div className="absolute bottom-0 left-0 w-full p-[1rem]">
+        {/* Account settings link */}
         <NavLink
           to="/account"
           className={({ isActive }) =>
@@ -66,4 +69,3 @@ const NavigationDrawer = () => {
 };
 
 export default NavigationDrawer;
-// 'gap-[.3rem] rounded-full flex items-center  hover:bg-light-gray'

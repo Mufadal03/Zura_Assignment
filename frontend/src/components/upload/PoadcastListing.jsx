@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import PlatformCard from "./PlatformCard";
 import { Platforms, changeDateFormat, headings } from "../../assets";
-import '../../App.css'
+import "../../App.css";
 import { useNavigate } from "react-router-dom";
 import Modal from "../modals/Modal";
 import UploadPodcastModal from "../modals/UploadPodcastModal";
+
 const PoadcastListing = ({
   name,
   subProjects,
@@ -13,15 +14,24 @@ const PoadcastListing = ({
 }) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading,setIsLoading]=useState(false)
+  // Fetch the single project data when isOpen changes
   useEffect(() => {
+    setIsLoading(true)
     getSingleProject();
+    setIsLoading(false)
   }, [isOpen]);
+
   return (
     <div className="mt-1">
       <h1 className="text-purple font-bold text-4xl py-2 mb-2">{name}</h1>
       <div className="grid grid-cols-3 gap-20">
         {Platforms.slice(0, 3).map((el, i) => (
-          <div key={i.toString(2)} className="w-[80%]" onClick={() => setIsOpen(true)}>
+          <div
+            key={i.toString(2)}
+            className="w-[80%]"
+            onClick={() => setIsOpen(true)}
+          >
             <PlatformCard {...el} />
           </div>
         ))}
@@ -35,26 +45,31 @@ const PoadcastListing = ({
         </button>
       </div>
 
-      {/* table */}
+      {/* Table */}
       <div className="rounded-lg  mt-4">
         <table className="min-w-full custom-table">
           <thead>
             <tr>
-              {headings.map((el,i) => (
-                <th key={i.toString(2)} className="p-5 text-lg font-[700] capitalize">{el}</th>
+              {headings.map((el, i) => (
+                <th
+                  key={i.toString(2)}
+                  className="p-5 text-lg font-[700] capitalize"
+                >
+                  {el}
+                </th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {subProjects?.length > 0 &&
-              subProjects?.map((el,i) => {
+            {isLoading ? 'Fetching Data.........' :subProjects?.length > 0 &&
+              subProjects?.map((el, i) => {
                 return (
                   <tr key={i.toString(2)} className="border-2 p-4">
                     <td className="text-center font-[300] p-5">{el.name}</td>
-                    <td className="text-center ">
+                    <td className="text-center">
                       {changeDateFormat(el.createdAt)}
                     </td>
-                    <td className="text-center ">
+                    <td className="text-center">
                       {el.status ? "Done" : "Pending"}
                     </td>
                     <td className="text-center">
@@ -68,7 +83,7 @@ const PoadcastListing = ({
                       <button
                         onClick={() => handleDelete(el._id)}
                         style={{ border: " 0.895px solid #D9D9D9" }}
-                        className=" text-sm p-3  text-[#FF274C]"
+                        className={`text-sm p-3  text-[#FF274C] `}
                       >
                         Delete
                       </button>

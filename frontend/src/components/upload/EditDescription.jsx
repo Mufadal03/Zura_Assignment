@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { EditIcon, Notification, SearchIcon, SettingMain } from "../../assets";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { api } from "../../api";
+import NavigationBar from "../common/NavigationBar";
 
 const EditDescription = () => {
   const { id } = useParams();
@@ -10,24 +11,35 @@ const EditDescription = () => {
   const [originalContent, setOriginalContent] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [getContentLoading,setContentLoading]=useState(false)
+
+  // Function to fetch the project description
   const getProjectDescription = async () => {
     try {
+      setContentLoading(true);
       const singleProject = await api.get(`/subProject/${id}`);
       setOriginalContent(singleProject.response.description);
       setDescription(singleProject.response.description);
+      setContentLoading(false);
     } catch (error) {
       console.log(error);
     }
   };
+
+  // Function to toggle editing mode
   const handleEdit = () => {
     setIsEditing(!isEditing);
   };
+
+  // Function to save changes and exit editing mode
   const handleSave = async () => {
     try {
+      setIsLoading(true);
       const response = await api.patch(`/subProject/edit/${id}`, {
         description,
       });
-      console.log(response);
+      setIsLoading(false);
       const backToProjectUrl = location.pathname
         .split("/")
         .slice(1, 4)
@@ -41,15 +53,10 @@ const EditDescription = () => {
   useEffect(() => {
     getProjectDescription();
   }, []);
+
   return (
     <div className="w-3/4 p-5 font-Roboto">
-      <div className="flex justify-between border-2">
-        <div>Breadcrum here</div>
-        <div className="flex gap-2">
-          <img src={SettingMain} alt="setting" className="h-[2.5rem]" />
-          <img src={Notification} alt="notification" className="h-[2.5rem]" />
-        </div>
-      </div>
+      <NavigationBar />
       <div className="mt-1">
         <div className="flex justify-between">
           <h1 className="text-purple font-[700] text-4xl py-2 mb-2">
@@ -57,7 +64,7 @@ const EditDescription = () => {
           </h1>
 
           {isEditing && (
-            <div className="flex items-center gap-2 ">
+            <div className="flex items-center gap-2">
               <button
                 onClick={() => setDescription(originalContent)}
                 className="border-2 border-[#FF274C] px-10 rounded-md font-bold text-[#FF274C] py-3"
@@ -65,10 +72,11 @@ const EditDescription = () => {
                 Discard
               </button>
               <button
+                disabled={isLoading}
                 onClick={handleSave}
-                className="border-2 px-10 rounded-md font-bold text-white bg-activeBlack py-3"
+                className={`border-2 px-10 rounded-md font-bold text-white bg-activeBlack py-3 ${isLoading?"cursor-not-allowed":"cursor-pointer"}`}
               >
-                Save & Exit
+                {isLoading ? "Saving Data....." : " Save & Exit"}
               </button>
             </div>
           )}
@@ -101,7 +109,11 @@ const EditDescription = () => {
                 />
               </div>
             ) : (
-              <div>{description}</div>
+              <div>
+                {getContentLoading
+                  ? "Loading Content Please Wait....."
+                  : description}
+              </div>
             )}
           </div>
         </div>

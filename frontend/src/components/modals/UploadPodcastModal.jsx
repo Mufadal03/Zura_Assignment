@@ -8,11 +8,13 @@ const initialState = {
 };
 
 const UploadPodcastModal = ({ onClose }) => {
+  const [isLoading,setIsLoading] = useState(false)
   const [podcastData, setPodcastData] = useState(initialState);
   const [onError, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const { id } = useParams();
   const nameRef = useRef();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setPodcastData({
@@ -33,7 +35,9 @@ const UploadPodcastModal = ({ onClose }) => {
       return;
     }
     try {
+      setIsLoading(true)
       const res = await api.post(`/subProject/create/${id}`, podcastData);
+      setIsLoading(false);
       if (res.success) {
         onClose();
       }
@@ -85,10 +89,13 @@ const UploadPodcastModal = ({ onClose }) => {
       {onError && <div className="text-md text-[#FF274C]"> {errorMessage}</div>}
       <div className="flex justify-end">
         <button
+          disabled={isLoading}
           onClick={handleUpload}
-          className="px-7 py-2 rounded-md text-white bg-[#211935] font-semibold"
+          className={`px-7 py-2 rounded-md text-white bg-[#211935] font-semibold ${
+            isLoading ? "cursor-not-allowed bg-gray-400 text-gray-700 " : ""
+          }`}
         >
-          Upload
+          {isLoading ? "Uploading...." : "Upload"}
         </button>
       </div>
     </div>

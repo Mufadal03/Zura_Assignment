@@ -6,22 +6,25 @@ function Signup() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-    const [errorMessage, setErrorMessage] = useState('')
-    const navigate = useNavigate()
-  const handleSignup = async(e) => {
-      e.preventDefault();
-      if (!username || !email || !password) {
-          setErrorMessage("All Fields are Required")
-          return
-      }
+  const [errorMessage, setErrorMessage] = useState("");
+    const navigate = useNavigate();
+    const [isLoading,setIsLoading] = useState(false)
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    if (!username || !email || !password) {
+      setErrorMessage("All Fields are Required");
+      return;
+    }
       try {
-          const res = await api.post('/user/signUp', { username, email, password })
-          if (res.success) {
-              navigate('/login')
-          }
-      } catch (error) {
-        console.log(error)
+        setIsLoading(true)
+          const res = await api.post("/user/signUp", { username, email, password });
+          setIsLoading(false)
+      if (res.success) {
+        navigate("/login");
       }
+    } catch (error) {
+      console.log(error);
+    }
     // Perform signup logic here (e.g., send data to the server)
     console.log("Signup data:", { username, email, password });
   };
@@ -76,9 +79,10 @@ function Signup() {
 
           <button
             type="submit"
+            disabled={isLoading}
             className="w-full bg-[#3b82f6] hover:bg-[#2563eb] text-white font-semibold py-2 rounded focus:outline-none"
           >
-            Sign Up
+            {isLoading ? "Signing Up....." : " Sign Up"}
           </button>
         </form>
         <p className="text-gray-600 mt-4">

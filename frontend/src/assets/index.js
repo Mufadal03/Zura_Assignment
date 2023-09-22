@@ -13,11 +13,18 @@ import SearchIcon from "./Icons/Search.svg";
 import EditIcon from './Icons/editIcon.svg'
 import CrossIcon from "./Icons/CrossIcon.svg";
 import profileImg from './Icons/profileImg.svg'
+import Home from './Icons/home.svg'
 const headings = ["name", "Upload Date & Time", "Status", "Actions"];
+const setCurrentProjectId = (id) => {
+    localStorage.setItem('currentProjectId',JSON.stringify(id))
+}
+const getCurretProjectId = () => {
+    return JSON.parse(localStorage.getItem('currentProjectId'))||""
+}
 const Menus = [
     {
         name: "Projects",
-        link: "/project/upload",
+        link: `/project/upload`,
     },
     {
         name: "Widget Configurations",
@@ -98,6 +105,7 @@ function changeDateFormat(utcDate) {
     return `${day} ${month} ${year} | ${hours}:${minutes}`;
 }
 export {
+    Home,
     EditIcon,
     Logo,
     Menus,
@@ -115,5 +123,7 @@ export {
     SearchIcon,
     YoutubeIcon,
     CrossIcon,
-    profileImg
+    profileImg,
+    setCurrentProjectId,
+    getCurretProjectId
 };

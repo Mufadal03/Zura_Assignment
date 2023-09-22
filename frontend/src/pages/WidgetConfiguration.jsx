@@ -1,31 +1,18 @@
 import React from "react";
-import { Notification, SettingMain } from "../assets";
-import {
-  Flex,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-} from "@chakra-ui/react";
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 import General from "../components/widgetConfiguration/General";
 import Display from "../components/widgetConfiguration/Display";
+import NavigationBar from "../components/common/NavigationBar";
 
 const WidgetConfiguration = () => {
   return (
     <div className="w-3/4 p-5">
-      {/* BREADCRUM HERE MAKE IT DYNAMIC */}
-      <div className="flex justify-between border-2">
-        <div>Breadcrum here</div>
-        <div className="flex gap-2">
-          <img src={SettingMain} alt="setting" className="h-[2.5rem]" />
-          <img src={Notification} alt="notification" className="h-[2.5rem]" />
-        </div>
-      </div>
+      <NavigationBar /> {/* Display a navigation bar */}
       <div className="mt-1 py-2">
         <h1 className="text-4xl font-bold text-purple mb-5">Configuration</h1>
-        <div className="border-2 flex">
-          <Tabs border={"2px solid red"} w={"full"}>
+        <div className=" flex">
+          <Tabs w={"full"}>
+            {/* TabList for selecting configuration categories */}
             <TabList>
               <Tab>General</Tab>
               <Tab>Display</Tab>
@@ -33,14 +20,18 @@ const WidgetConfiguration = () => {
             </TabList>
 
             <TabPanels>
+              {/* TabPanel for each configuration category */}
               <TabPanel>
+                {/* Render the General configuration component */}
                 <General />
               </TabPanel>
 
               <TabPanel>
+                {/* Render the Display configuration component */}
                 <Display />
               </TabPanel>
-              
+
+              {/* Additional TabPanels for other configuration categories */}
             </TabPanels>
           </Tabs>
         </div>
