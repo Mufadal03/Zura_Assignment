@@ -6,9 +6,7 @@ const { subProjectRoutes } = require('./routes/subProject.routes')
 const cors = require('cors')
 require('dotenv').config()
 const app = express()
-app.use(cors({
-    origin:['http://localhost:3000']
-}))
+app.use(cors('*'))
 app.use(express.json())
 
 
